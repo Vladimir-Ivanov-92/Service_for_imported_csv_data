@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+
+# Distribution / packaging
+
+
+
+# Unit test / coverage reports
+.pytest_cache/
+tests/migrations/versions/
+
+# Environments
+.venv
