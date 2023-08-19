@@ -3,7 +3,7 @@ from pydantic import EmailStr
 from db.models import User
 
 
-# TODO: использовать библиотеку fastapi-users вместо самостоятельного создания
+# TODO: использовать библиотеку fastapi-users вместо самостоятельного создания User
 class UserDAL:
     """Data Access Layer for operating user info"""
 
@@ -19,4 +19,3 @@ class UserDAL:
         # async synchronize session data with database
         await self.db_session.flush()
         return new_user
-

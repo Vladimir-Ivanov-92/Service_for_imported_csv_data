@@ -19,8 +19,8 @@ async def get_db() -> Generator:
         session: AsyncSession = async_session()
         print("session open") # Отладочный print!
         yield session
-    except Exception as e:
-        print(f"{e=}")
+    except Exception as get_db_exception:
+        print(f"{get_db_exception=}")
     finally:
         await session.close()
         print("session close") # Отладочный print!

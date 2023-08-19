@@ -1,5 +1,6 @@
 import asyncio
 import os
+import sys
 from typing import Generator, Any
 
 import asyncpg
@@ -11,13 +12,17 @@ from sqlalchemy.orm import sessionmaker
 
 from starlette.testclient import TestClient
 
+# Получить путь к корневому каталогу проекта
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Добавить корневой каталог в Python-путь
+sys.path.append(project_root)
+
 import settings
 from db.session import get_db
 from main2 import app
 
-test_engine = create_async_engine(settings.TEST_DATABASE_URL, future=True, echo=True)
-test_async_session = sessionmaker(test_engine, expire_on_commit=False,
-                                  class_=AsyncSession)
+
 CLEAN_TABLES = [
     "users",
 ]
@@ -60,6 +65,10 @@ async def clean_tables(async_session_test):
 
 async def _get_test_db():
     try:
+        test_engine = create_async_engine(settings.TEST_DATABASE_URL, future=True,
+                                          echo=True)
+        test_async_session = sessionmaker(test_engine, expire_on_commit=False,
+                                          class_=AsyncSession)
         yield test_async_session()
     except Exception as exception:
         print(f"{exception=}")
