@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Table List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Columns</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file_name, columns in tables.items() %}
+            <tr>
+                <td><a href="/data/{{ file_name }}">{{ file_name }}</a></td>
+                <td>{{ columns|join(", ") }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="/file">Назад</a>
+</body>
+</html>
+

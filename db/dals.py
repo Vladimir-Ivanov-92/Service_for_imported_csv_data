@@ -1,6 +1,7 @@
 from pydantic import EmailStr
+from sqlalchemy import select
 
-from db.models import User
+from db.models import User, File
 
 
 # TODO: использовать библиотеку fastapi-users вместо самостоятельного создания User
@@ -19,3 +20,26 @@ class UserDAL:
         # async synchronize session data with database
         await self.db_session.flush()
         return new_user
+
+
+
+class FileDAL:
+
+    def __init__(self, db_session):
+        self.db_session = db_session
+
+    async def get_tables(self) -> dict[str]:
+        tables = {}
+
+        query = select(File.file_name, File.columns)
+        result = await self.db_session.execute(query)
+        result_raw = result.fetchall()
+        for row in result_raw:
+            file_name = row[0]
+            columns = row[1].split(',')
+            if file_name not in tables:
+                tables[file_name] = columns
+            else:
+                tables[file_name].extend(columns)
+
+        return tables

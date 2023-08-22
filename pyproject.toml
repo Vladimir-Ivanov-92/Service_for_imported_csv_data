@@ -23,6 +23,8 @@ httpx = "^0.24.1"
 greenlet = "^2.0.2"
 passlib = "^1.7.4"
 pre-commit = "^3.3.3"
+pandas = "^2.0.3"
+python-multipart = "^0.0.6"
 
 
 [build-system]

@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base
 
@@ -14,3 +14,11 @@ class User(Base):
     login = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     is_active = Column(Boolean(), default=True)
+
+
+class File(Base):
+    __tablename__ = "files"
+
+    files_id = Column(Integer(), primary_key=True)
+    file_name = Column(String(100), nullable=False)
+    columns = Column(String, nullable=False)
