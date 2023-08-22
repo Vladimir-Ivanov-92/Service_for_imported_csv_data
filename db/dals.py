@@ -1,7 +1,7 @@
 from pydantic import EmailStr
 from sqlalchemy import select
 
-from db.models import User, File
+from db.models import User, FileStructure
 
 
 # TODO: использовать библиотеку fastapi-users вместо самостоятельного создания User
@@ -22,8 +22,7 @@ class UserDAL:
         return new_user
 
 
-
-class FileDAL:
+class FileStructureDAL:
 
     def __init__(self, db_session):
         self.db_session = db_session
@@ -31,7 +30,7 @@ class FileDAL:
     async def get_tables(self) -> dict[str]:
         tables = {}
 
-        query = select(File.file_name, File.columns)
+        query = select(FileStructure.file_name, FileStructure.columns)
         result = await self.db_session.execute(query)
         result_raw = result.fetchall()
         for row in result_raw:

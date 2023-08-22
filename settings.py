@@ -1,4 +1,4 @@
-"""File with settings and configs for the project"""
+"""FileStructure with settings and configs for the project"""
 
 from envparse import Env
 

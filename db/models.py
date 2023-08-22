@@ -16,7 +16,7 @@ class User(Base):
     is_active = Column(Boolean(), default=True)
 
 
-class File(Base):
+class FileStructure(Base):
     __tablename__ = "files"
 
     files_id = Column(Integer(), primary_key=True)

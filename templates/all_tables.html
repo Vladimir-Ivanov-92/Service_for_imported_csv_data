@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Table List</title>
+    <title>Таблицы</title>
     <style>
         table {
             border-collapse: collapse;
@@ -20,18 +20,18 @@
     </style>
 </head>
 <body>
-    <h1>Table List</h1>
+    <h1>Таблицы</h1>
     <table>
         <thead>
             <tr>
-                <th>File Name</th>
-                <th>Columns</th>
+                <th>Название</th>
+                <th>Столбцы</th>
             </tr>
         </thead>
         <tbody>
             {% for file_name, columns in tables.items() %}
             <tr>
-                <td><a href="/data/{{ file_name }}">{{ file_name }}</a></td>
+                <td><a href="/file/table/{{ file_name }}">{{ file_name }}</a></td>
                 <td>{{ columns|join(", ") }}</td>
             </tr>
             {% endfor %}
