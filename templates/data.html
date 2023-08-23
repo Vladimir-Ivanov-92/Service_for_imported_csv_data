@@ -34,8 +34,33 @@
 <body>
 <a href="/file/tables">Назад к списку таблиц</a>
 <h1>{{ table_name }}</h1>
+
+<!-- Форма для фильтрации -->
+<form action="{{ request.url.path }}">
+    <select name="filter_column">
+        <option value="">Выберите столбец для фильтрации</option>
+        {% for column in name_columns %}
+        <option value="{{ column }}" {% if filter_column== column %}selected{% endif %}>
+            {{ column }}
+        </option>
+        {% endfor %}
+    </select>
+    {% if filter_column and filter_values %}
+    <select name="filter_value">
+        <option value="">Выберите значение</option>
+        {% for value in filter_values %}
+        <option value="{{ value }}" {% if filter_value== value %}selected{% endif %}>{{
+            value }}
+        </option>
+        {% endfor %}
+    </select>
+    {% endif %}
+    <button type="submit">Применить фильтр</button>
+</form>
+
+
 <p>
-    </з><a href="{{ request.url.path }}">Сбросить фильтрацию/сортировку</a>
+    <a href="{{ request.url.path }}">Сбросить фильтрацию/сортировку</a>
 </p>
 <table>
     <thead>
@@ -43,12 +68,13 @@
         {% for column in name_columns %}
         <!-- Заголовок столбца с сортировкой -->
         <th>
-            <a href="{{ request.url.path }}?sort_column={{ column }}&ascending={{ not ascending_state }}">
+            <a href="{{ request.url.path }}?sort_column={{ column }}&ascending={{ not ascending }}{% if filter_column %}&filter_column={{ filter_column}}{% endif %}{% if filter_value %}&filter_value={{ filter_value}}{% endif %}">
                 {{ column }}
                 {% if sort_column == column %}
                 {% if ascending %}▲{% else %}▼{% endif %}
                 {% endif %}
             </a>
+
         </th>
         {% endfor %}
     </tr>
