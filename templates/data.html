@@ -32,28 +32,39 @@
     </style>
 </head>
 <body>
-    <a href="/file/tables">Назад к списку таблиц</a>
-    <h1>{{ table_name }}</h1>
-    <table>
-        <thead>
-            <tr>
-                {% for column in name_columns %}
-                <th>{{ column }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for _, row in columns_data %}
-            <tr>
-                {% for value in row.values %}
-                <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <a href="/file/tables">Назад к списку таблиц</a>
+<a href="/file/tables">Назад к списку таблиц</a>
+<h1>{{ table_name }}</h1>
+<p>
+    </з><a href="{{ request.url.path }}">Сбросить фильтрацию/сортировку</a>
+</p>
+<table>
+    <thead>
+    <tr>
+        {% for column in name_columns %}
+        <!-- Заголовок столбца с сортировкой -->
+        <th>
+            <a href="{{ request.url.path }}?sort_column={{ column }}&ascending={{ not ascending_state }}">
+                {{ column }}
+                {% if sort_column == column %}
+                {% if ascending %}▲{% else %}▼{% endif %}
+                {% endif %}
+            </a>
+        </th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for _, row in columns_data %}
+    <tr>
+        {% for value in row.values %}
+        <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<a href="/file/tables">Назад к списку таблиц</a>
 
 </body>
 </html>

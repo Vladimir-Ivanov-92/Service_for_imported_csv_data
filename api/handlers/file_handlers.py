@@ -1,13 +1,10 @@
-import os
-
 import pandas as pd
-from fastapi import APIRouter, Request, UploadFile, File, Depends
+from fastapi import APIRouter, Request, UploadFile, File, Depends, Query
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.service import _load_data, _get_tables, _get_name_columns_from_csv_table, \
-    _get_columns_data_from_csv_table
+from api.service import _load_data, _get_tables, _get_name_columns_from_csv_table
 from db.session import get_db
 
 file_router = APIRouter()
@@ -43,14 +40,33 @@ async def show_tables(request: Request, db: AsyncSession = Depends(get_db)):
     return templates.TemplateResponse("all_tables.html", context)
 
 
-# Получение данных из конкретной таблицы
+ASCENDING_STATE = True
+
+# Отображение выбранной таблицы (с возможностью сортироки)
 @file_router.get('/table/{table_name}', response_class=HTMLResponse)
-async def get_data(request: Request, table_name: str,
-                   db: AsyncSession = Depends(get_db)):
+async def sort_data(request: Request, table_name: str,
+                    sort_column: str = Query(None, alias="sort_column"),
+                    ascending: bool = Query(None, alias="ascending"),
+                    db: AsyncSession = Depends(get_db)):
+    global ASCENDING_STATE
+
     file_path = f"uploads/{table_name}.csv"
     table = pd.read_csv(file_path)
     name_columns = await _get_name_columns_from_csv_table(table, db)
-    columns_data = await _get_columns_data_from_csv_table(table, db)
+
+    if sort_column:
+        if ascending is None:
+            ASCENDING_STATE = ASCENDING_STATE
+        else:
+            ASCENDING_STATE = not ASCENDING_STATE
+
+        columns_data = table.sort_values(by=sort_column,
+                                         ascending=ASCENDING_STATE).iterrows()
+    else:
+        columns_data = table.iterrows()
+
     context = {"request": request, "table_name": table_name,
-               "name_columns": name_columns, "columns_data": columns_data}
+               "name_columns": name_columns, "columns_data": columns_data,
+               "sort_column": sort_column,
+               "ascending": ASCENDING_STATE}
     return templates.TemplateResponse("data.html", context)
