@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["vova2092 <vovai2092@yandex.ru>"]
 readme = "README.md"
-packages = [{include = "service_for_imported_csv_data"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
