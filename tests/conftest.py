@@ -20,7 +20,7 @@ sys.path.append(project_root)
 
 import settings
 from db.session import get_db
-from main2 import app
+from run import app
 
 
 CLEAN_TABLES = [

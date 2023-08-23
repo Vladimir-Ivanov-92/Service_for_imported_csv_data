@@ -47,10 +47,10 @@ async def show_tables(request: Request, db: AsyncSession = Depends(get_db)):
 
 @file_router.get('/table/{table_name}', response_class=HTMLResponse)
 def sort_data(request: Request, table_name: str,
-                    sort_column: str = Query(None, alias="sort_column"),
-                    ascending: bool = Query(None, alias="ascending"),
-                    filter_column: str = Query(None, alias="filter_column"),
-                    filter_value: str = Query(None, alias="filter_value")):
+              sort_column: str = Query(None, alias="sort_column"),
+              ascending: bool = Query(None, alias="ascending"),
+              filter_column: str = Query(None, alias="filter_column"),
+              filter_value: str = Query(None, alias="filter_value")):
     file_path = f"uploads/{table_name}.csv"
     table = pd.read_csv(file_path)
 
