@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.service import _load_data_from_csv_to_db, _get_tables, \
+from api.file.file_service import _load_data_from_csv_to_db, _get_tables, \
     _load_csv_to_uploads, _filtering_and_sorting_data
 from db.session import get_db
 
@@ -46,7 +46,7 @@ async def show_tables(request: Request, db: AsyncSession = Depends(get_db)):
 
 
 @file_router.get('/table/{table_name}', response_class=HTMLResponse)
-async def sort_data(request: Request, table_name: str,
+def sort_data(request: Request, table_name: str,
                     sort_column: str = Query(None, alias="sort_column"),
                     ascending: bool = Query(None, alias="ascending"),
                     filter_column: str = Query(None, alias="filter_column"),
