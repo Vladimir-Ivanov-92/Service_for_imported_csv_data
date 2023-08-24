@@ -15,8 +15,8 @@
   - poetry
 
 ## Setup and run:
-Перейдите в директорию, в которую будете клонировать репозиторий.
-В зависимости от того, каким менеджером зависимостей Вы пользуетесь, выполните следующие
+1. Перейдите в директорию, в которую будете клонировать репозиторий.
+2. В зависимости от того, каким менеджером зависимостей Вы пользуетесь, выполните следующие
 команды:
 
 При управлении зависимостями через [poetry](https://python-poetry.org/):
@@ -25,10 +25,6 @@ git clone https://github.com/Vladimir-Ivanov-92/Service_for_imported_csv_data.gi
 cd Service_for_imported_csv_data 
 poetry install --without dev
 poetry shell
-make up
-alembic upgrade heads
-mkdir uploads
-uvicorn run:app --reload
 ```
 
 С помощью pip:
@@ -38,11 +34,16 @@ cd Service_for_imported_csv_data
 python3 -m venv venv 
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+3. Создание контейнеров с БД, миграции и запуск приложения:
+```bash
 make up
 alembic upgrade heads
 mkdir uploads
 uvicorn run:app --reload
 ```
+
 
 Docs: 
 ![docs.png](image_readme%2Fdocs.png)
