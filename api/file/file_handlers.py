@@ -1,11 +1,12 @@
 import pandas as pd
-from fastapi import APIRouter, Request, UploadFile, File, Depends, Query
+from fastapi import APIRouter, Depends, File, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.file.file_service import _load_data_from_csv_to_db, _get_tables, \
-    _load_csv_to_uploads, _filtering_and_sorting_data
+from api.file.file_service import (_filtering_and_sorting_data, _get_tables,
+                                   _load_csv_to_uploads,
+                                   _load_data_from_csv_to_db)
 from db.session import get_db
 
 file_router = APIRouter()

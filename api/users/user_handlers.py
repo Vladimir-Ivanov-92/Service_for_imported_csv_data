@@ -1,12 +1,12 @@
+from logging import getLogger
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.users.user_models import UserCreate, ShowUser
+from api.users.user_models import ShowUser, UserCreate
 from api.users.user_service import _create_new_user
 from db.session import get_db
-
-from logging import getLogger
 
 logger = getLogger(__name__)
 
@@ -21,5 +21,5 @@ async def create_user(body: UserCreate, db: AsyncSession = Depends(get_db)) -> S
         logger.error(err)
         raise HTTPException(
             status_code=503,
-            detail=f"A User with this email is already exist"
+            detail="A User with this email is already exist"
         )

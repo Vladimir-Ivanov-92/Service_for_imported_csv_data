@@ -4,7 +4,7 @@ from pandas import DataFrame
 from pydantic import EmailStr
 from sqlalchemy import select
 
-from db.models import User, FileStructure
+from db.models import FileStructure, User
 
 
 # TODO: использовать библиотеку fastapi-users вместо самостоятельного создания User
@@ -30,7 +30,7 @@ class FileStructureDAL:
     def __init__(self, db_session):
         self.db_session = db_session
 
-    async def _load_data_to_db(self, file_path: str, df:DataFrame):
+    async def _load_data_to_db(self, file_path: str, df: DataFrame):
         # Правильный путь к файлу после перемещения в папку uploads
         try:
             file_name = os.path.basename(file_path)

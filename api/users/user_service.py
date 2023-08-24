@@ -1,8 +1,8 @@
-from api.users.user_models import UserCreate, ShowUser
-from sqlalchemy.ext.asyncio import AsyncSession
-from db.dals import UserDAL
 from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.users.user_models import ShowUser, UserCreate
+from db.dals import UserDAL
 from db.session import get_db
 
 

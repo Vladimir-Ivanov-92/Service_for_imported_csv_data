@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, APIRouter
+from fastapi import APIRouter, FastAPI
 
 from api.file.file_handlers import file_router
 from api.users.user_handlers import user_router

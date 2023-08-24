@@ -1,15 +1,13 @@
 import asyncio
 import os
 import sys
-from typing import Generator, Any
+from typing import Any, Generator
 
 import asyncpg
 import pytest
 import pytest_asyncio
-
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
-
 from starlette.testclient import TestClient
 
 # Получить путь к корневому каталогу проекта
@@ -21,7 +19,6 @@ sys.path.append(project_root)
 import settings
 from db.session import get_db
 from run import app
-
 
 CLEAN_TABLES = [
     "users",

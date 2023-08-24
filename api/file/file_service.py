@@ -1,13 +1,12 @@
 import os
 
-from fastapi import Depends, UploadFile, File, Query
+import pandas as pd
+from fastapi import Depends, File, Query, UploadFile
 from pandas import DataFrame
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.dals import FileStructureDAL
 from db.session import get_db
-
-import pandas as pd
 
 
 def _load_csv_to_uploads(file: UploadFile = File(...)) -> str:
